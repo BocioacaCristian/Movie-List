@@ -11,12 +11,18 @@ function Home() {
   const [movies, setMovies] = React.useState([]);
   const [error, setError] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
+  const [page, setPage] = React.useState(1);
 
-  const loadPopularMovies = async () => {
-    setLoading(true);
+  const loadPopularMovies = async (pageNumber = 1) => {
+    if (pageNumber === 1) setLoading(true);
+
     try {
-      const popularMovies = await getPopularMovies();
-      setMovies(popularMovies);
+      const newMovies = await getPopularMovies(pageNumber);
+      
+      setMovies((prevMovies) => {
+        // If page 1, replace. If > 1, append
+        return pageNumber === 1 ? newMovies : [...prevMovies, ...newMovies];
+      });
       setError(null);
     } catch (err) {
       console.log(err);
@@ -27,13 +33,14 @@ function Home() {
   };
 
   React.useEffect(() => {
-    loadPopularMovies();
+    loadPopularMovies(1);
   }, []);
 
   const handleSearch = async (e) => {
     e.preventDefault();
 
     if (!searchQuery.trim()) {
+      setPage(1);
       await loadPopularMovies();
       return;
     }
@@ -53,6 +60,11 @@ function Home() {
     }
   };
 
+  const handleLoadMore = () => {
+    const nextPage = page + 1;
+    setPage(nextPage);
+    loadPopularMovies(nextPage);
+  };
 
   // When a movie is clicked, to redirect to movies details
   return (
@@ -72,14 +84,28 @@ function Home() {
 
       {error && <div className="error-message">{error}</div>}
 
-      {loading ? (
+      {loading && page === 1 ? (
         <div className="loading">Loading....</div>
       ) : (
-        <div className="movies-grid">
-          {movies.map((movie) => (
-            <MovieCard movie={movie} key={movie.id} />
-          ))}
-        </div>
+        <>
+          <div className="movies-grid">
+            {movies.map((movie) => (
+              <MovieCard movie={movie} key={movie.id} />
+            ))}
+          </div>
+          {/* Only show Load more if not searching */}
+          {!searchQuery && (
+            <div className="load-more-container">
+              <button
+                className="load-more-btn"
+                onClick={handleLoadMore}
+                disabled={loading}
+              >
+                {loading ? "Loading..." : "Load More"}
+              </button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
