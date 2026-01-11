@@ -6,6 +6,8 @@ import MovieCard from "../components/MovieCard";
 function Favorites() {
   const { favorites } = useMovieContext();
 
+
+// When a movie is clicked, to redirect to movies details
   if (favorites) {
     return (
       <div className="favorites">

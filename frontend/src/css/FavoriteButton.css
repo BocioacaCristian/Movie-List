@@ -1,0 +1,38 @@
+.fav-btn {
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+}
+
+.fav-btn:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+  transform: scale(1.1);
+}
+
+.fav-btn.active {
+  color: #ff4757;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.fav-btn.large {
+  width: 50px;
+  height: 50px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.fav-btn.large:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.fav-btn.large.active {
+  background-color: rgba(255, 71, 87, 0.1);
+}

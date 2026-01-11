@@ -53,6 +53,8 @@ function Home() {
     }
   };
 
+
+  // When a movie is clicked, to redirect to movies details
   return (
     <div className="home">
       <form onSubmit={handleSearch} className="search-form">
