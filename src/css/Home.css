@@ -45,7 +45,7 @@
 .load-more-container {
   display: flex;
   justify-content: center;
-  pad: 2rem 0;
+  padding: 2rem 0;
   width: 100%;
 }
 
@@ -72,13 +72,13 @@
   transform: none;
 }
 
-
-@media (max-width: 639px) {
-  .home {
-    padding: 1rem 0;
-  }
-
+@media (max-width: 600px) {
   .search-form {
-    margin-bottom: 1rem;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+  }
+  
+  .search-button {
+    width: 100%;
   }
 }
